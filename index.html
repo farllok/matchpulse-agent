@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MatchPulse Agent</title>
+    <meta
+      name="description"
+      content="A TxODDS-ready World Cup match intelligence dashboard for market, agent, and fan experience tracks."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">TxODDS World Cup Hackathon MVP</p>
+        <h1>MatchPulse Agent</h1>
+      </div>
+      <div class="status-pill" id="feedStatus">Demo feed</div>
+    </header>
+
+    <main class="layout">
+      <section class="panel hero-panel">
+        <div>
+          <p class="section-label">Live match intelligence</p>
+          <h2>Turns scores, odds movement, and match state into clear action signals.</h2>
+          <p class="muted">
+            Built as a lightweight World Cup dashboard that can run on mock data for review
+            and switch to TxLINE snapshots once a free World Cup API token is activated.
+          </p>
+        </div>
+        <div class="metric-strip">
+          <div>
+            <span id="matchCount">0</span>
+            <small>fixtures</small>
+          </div>
+          <div>
+            <span id="signalCount">0</span>
+            <small>signals</small>
+          </div>
+          <div>
+            <span id="confidenceAvg">0%</span>
+            <small>avg confidence</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel controls-panel">
+        <div>
+          <p class="section-label">Data source</p>
+          <h2>TxLINE adapter</h2>
+          <p class="muted">
+            Paste guest JWT and API token to use live snapshots. Leave empty for the bundled
+            demo feed.
+          </p>
+        </div>
+        <label>
+          Guest JWT
+          <input id="jwtInput" placeholder="Bearer token from /auth/guest/start" />
+        </label>
+        <label>
+          X-Api-Token
+          <input id="apiTokenInput" placeholder="Token from /api/token/activate" />
+        </label>
+        <label>
+          Competition ID
+          <input id="competitionInput" value="" placeholder="Optional, blank means all fixtures" />
+        </label>
+        <button id="refreshButton">Refresh feed</button>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">Fixtures</p>
+            <h2>Match board</h2>
+          </div>
+          <button class="secondary" id="loadDemoButton">Load demo</button>
+        </div>
+        <div class="fixture-grid" id="fixtureGrid"></div>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <p class="section-label">Agent output</p>
+            <h2>Generated signals</h2>
+          </div>
+        </div>
+        <div class="signal-list" id="signalList"></div>
+      </section>
+
+      <section class="panel">
+        <p class="section-label">Submission angle</p>
+        <h2>Why this fits the hackathon</h2>
+        <div class="track-grid">
+          <article>
+            <h3>Markets</h3>
+            <p>Highlights rapid changes in implied probability and price pressure.</p>
+          </article>
+          <article>
+            <h3>Trading agents</h3>
+            <p>Produces explainable signals with confidence and risk tags.</p>
+          </article>
+          <article>
+            <h3>Fan experiences</h3>
+            <p>Converts raw match data into readable live narratives.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
