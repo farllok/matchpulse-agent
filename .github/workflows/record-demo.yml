@@ -1,0 +1,42 @@
+name: Record demo video
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - index.html
+      - styles.css
+      - app.js
+      - scripts/record-demo.mjs
+      - .github/workflows/record-demo.yml
+
+permissions:
+  contents: write
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the project
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install browser tooling
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+
+      - name: Record MVP walkthrough
+        run: node scripts/record-demo.mjs
+
+      - name: Publish demo video
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add demo/matchpulse-demo.webm
+          git diff --cached --quiet || git commit -m "chore: refresh demo video"
+          git push
