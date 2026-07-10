@@ -18,7 +18,7 @@ const page = await context.newPage();
 await page.goto(siteUrl, { waitUntil: "networkidle" });
 await page.waitForTimeout(1600);
 
-await page.getByRole("button", { name: "Load demo" }).click();
+await page.getByRole("button", { name: "Restore demo snapshot" }).click();
 await page.waitForTimeout(1000);
 
 await page.mouse.move(900, 560, { steps: 18 });
