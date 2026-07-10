@@ -9,6 +9,11 @@ const [html, app, recorder, readme, submission] = await Promise.all([
   readFile("docs/SUBMISSION.md", "utf8"),
 ]);
 
+const release = html.match(/meta name="app-release" content="([^"]+)"/)?.[1];
+assert.ok(release, "index.html must declare an app release");
+assert.match(html, new RegExp(`styles\\.css\\?v=${release.replaceAll(".", "\\.")}`));
+assert.match(html, new RegExp(`app\\.js\\?v=${release.replaceAll(".", "\\.")}`));
+assert.match(recorder, new RegExp(`expectedRelease = "${release.replaceAll(".", "\\.")}"`));
 assert.match(html, /id="loadDemoButton"/);
 assert.match(html, /type="url"/);
 assert.doesNotMatch(html, /api\/fixtures\/snapshot/);

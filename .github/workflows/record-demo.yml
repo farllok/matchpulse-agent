@@ -3,11 +3,14 @@ name: Record demo video
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     paths:
       - index.html
       - styles.css
       - app.js
       - scripts/record-demo.mjs
+      - scripts/verify-static.mjs
       - .github/workflows/record-demo.yml
 
 permissions:
@@ -30,7 +33,7 @@ jobs:
           npm install --no-save playwright
           npx playwright install --with-deps chromium
 
-      - name: Record MVP walkthrough
+      - name: Record live MVP walkthrough
         run: node scripts/record-demo.mjs
 
       - name: Publish demo video

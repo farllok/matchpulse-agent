@@ -2,6 +2,7 @@ import { mkdir, rename } from "node:fs/promises";
 import { chromium } from "playwright";
 
 const siteUrl = "https://farllok.github.io/matchpulse-agent/";
+const expectedRelease = "2026.07.10.2";
 
 await mkdir("demo/recordings", { recursive: true });
 
@@ -15,7 +16,14 @@ const context = await browser.newContext({
 });
 
 const page = await context.newPage();
-await page.goto(siteUrl, { waitUntil: "networkidle" });
+let deployed = false;
+for (let attempt = 1; attempt <= 24; attempt += 1) {
+  await page.goto(`${siteUrl}?release=${expectedRelease}&attempt=${attempt}`, { waitUntil: "networkidle" });
+  deployed = await page.locator(`meta[name="app-release"][content="${expectedRelease}"]`).count() === 1;
+  if (deployed) break;
+  await page.waitForTimeout(5_000);
+}
+if (!deployed) throw new Error(`GitHub Pages did not deploy release ${expectedRelease} within two minutes`);
 await page.waitForTimeout(1600);
 
 await page.getByRole("button", { name: "Restore demo snapshot" }).click();
