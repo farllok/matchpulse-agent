@@ -1,0 +1,6 @@
+.superteam-agent.json
+.env
+.matchpulse/
+*.log
+node_modules/
+.npm-cache/

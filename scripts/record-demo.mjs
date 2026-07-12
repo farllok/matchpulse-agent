@@ -2,7 +2,7 @@ import { mkdir, rename } from "node:fs/promises";
 import { chromium } from "playwright";
 
 const siteUrl = "https://farllok.github.io/matchpulse-agent/";
-const expectedRelease = "2026.07.10.2";
+const expectedRelease = "2026.07.10.4";
 
 await mkdir("demo/recordings", { recursive: true });
 

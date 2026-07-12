@@ -4,6 +4,19 @@ MatchPulse Agent is a lightweight MVP for the Superteam Earn World Cup Hackathon
 
 It turns football fixture data into readable market, trading-agent, and fan-experience signals. The app runs with bundled demo data for judging and can switch to TxLINE snapshots when a free World Cup API token is activated.
 
+## Autonomous Odds Agent
+
+The local agent runs once per minute without user input. It:
+
+- loads the TxLINE fixture snapshot;
+- fetches current StablePrice markets for each fixture;
+- bootstraps a five-minute historical baseline with the `asOf` parameter;
+- converts probability changes to basis points and velocity;
+- creates a watch signal at 75 bps and an actionable signal at 150 bps;
+- persists baselines and an append-only signal log under `.matchpulse/`.
+
+`GET /api/agent/status` exposes the current deterministic decision state without exposing credentials. The browser is a monitoring client; the strategy runs on the server even when the page is closed.
+
 Target: [World Cup Hackathon](https://superteam.fun/earn/hackathon/world-cup/) — submissions close July 19, 2026. The target track is Trading Tools and Agents.
 
 ## Live Demo
@@ -24,14 +37,13 @@ No package install or build step is required.
 
 ## Use TxLINE Data
 
-1. Activate a free World Cup tier in TxLINE.
-2. Get a guest JWT from `/auth/guest/start`.
-3. Activate the API token through `/api/token/activate`.
-4. In the dashboard, paste both values and the verified fixture endpoint from the TxLINE API reference, then click `Refresh`.
+When `.env` contains `TXLINE_JWT` and `TXLINE_API_TOKEN`, the local server detects them automatically and loads `/api/fixtures/snapshot`. Run `npm start` and open `http://127.0.0.1:4173`.
+
+The published GitHub Pages build remains static and never receives local credentials. Its connection form supports session-only manual testing when needed.
 
 If no credentials are provided, the app uses demo data.
 
-Do not commit JWTs or API tokens. The fields are intentionally session-only and are never written to disk.
+Do not commit JWTs or API tokens. `.env` is Git-ignored and the local proxy never sends credentials to the browser.
 
 ## Submission Links
 

@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="app-release" content="2026.07.10.2" />
+    <meta name="app-release" content="2026.07.10.4" />
     <title>MatchPulse Agent | World Cup Signal Desk</title>
     <meta name="description" content="A focused World Cup signal desk with a TxLINE-ready live-feed adapter, transparent signal logic, and reviewable market context." />
-    <link rel="stylesheet" href="styles.css?v=2026.07.10.2" />
+    <link rel="stylesheet" href="styles.css?v=2026.07.10.4" />
   </head>
   <body>
     <header class="topbar">
@@ -46,17 +46,17 @@
       </section>
 
       <div class="metric-grid" aria-label="Snapshot summary">
-        <article><span id="matchCount">0</span><small>fixtures in view</small></article>
-        <article><span id="signalCount">0</span><small>action signals</small></article>
+        <article><span id="matchCount">0</span><small>markets tracked</small></article>
+        <article><span id="signalCount">0</span><small>active signals</small></article>
         <article><span id="confidenceAvg">0%</span><small>average confidence</small></article>
-        <article><span id="highRiskCount">0</span><small>high movement</small></article>
+        <article><span id="highRiskCount">0</span><small>actionable moves</small></article>
       </div>
 
       <section class="data-panel" aria-label="TxLINE connection">
         <div>
           <p class="section-label">Connection</p>
           <h2>TxLINE live adapter</h2>
-          <p class="muted">Credentials stay only in this browser session. The app never stores tokens.</p>
+          <p class="muted">Saved local credentials are detected automatically. Manual credentials stay only in this browser session.</p>
         </div>
         <details>
           <summary>Configure live feed</summary>
@@ -73,7 +73,7 @@
 
       <section class="content-grid">
         <section class="board-panel">
-          <div class="section-heading"><div><p class="section-label">Fixtures</p><h2>Match board</h2></div><span class="legend"><i></i> pressure score 35-95</span></div>
+          <div class="section-heading"><div><p class="section-label">Fixtures</p><h2>Market monitor</h2></div><span class="legend"><i></i> movement score</span></div>
           <div class="fixture-grid" id="fixtureGrid"></div>
         </section>
         <aside class="signal-panel">
@@ -84,9 +84,9 @@
 
       <section class="method-panel">
         <div><p class="section-label">Method</p><h2>Explainable by design</h2></div>
-        <p>Pressure is derived from the incoming snapshot when provided, otherwise a deterministic fallback is shown only for demo fixtures. Every signal is labelled with its confidence and recommended next check.</p>
+        <p>The agent compares current StablePrice probabilities with a five-minute baseline. A movement of 75 basis points creates a watch signal; 150 basis points creates an actionable signal. Every decision records direction, velocity, confidence, and market context.</p>
       </section>
     </main>
-    <script src="app.js?v=2026.07.10.2"></script>
+    <script src="app.js?v=2026.07.10.4"></script>
   </body>
 </html>
